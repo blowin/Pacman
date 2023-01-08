@@ -54,7 +54,7 @@
     {
         string[] file = File.ReadAllLines(path);
         
-        char[,] map = new char[GetMaxLengthOfLine(file), file.Length];
+        char[,] map = new char[GetMaxLengthOfRow(file), file.Length];
 
         for (int x = 0; x < map.GetLength(0); x++)
         {
@@ -102,16 +102,5 @@
         return direction;
     }
     
-    private static int GetMaxLengthOfLine(string[] lines)
-    {
-        int maxLength = lines[0].Length;
-
-        foreach (var line in lines)
-        {
-            if (line.Length > maxLength)
-                maxLength = line.Length;
-        }
-
-        return maxLength;
-    }
+    private static int GetMaxLengthOfRow(string[] lines) => lines.Select(e => e.Length).Max();
 }
