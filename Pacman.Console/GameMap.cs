@@ -38,8 +38,9 @@ public class GameMap
         this[position] = PlaceToMoveChar;
     }
     
-    public void DrawMap()
+    public void Draw()
     {
+        System.Console.ForegroundColor = ConsoleColor.Blue;
         for (int y = 0; y < _map.GetLength(1); y++)
         {
             for (int x = 0; x < _map.GetLength(0); x++)

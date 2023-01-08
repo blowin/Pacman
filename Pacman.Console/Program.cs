@@ -24,9 +24,7 @@ internal class Program
             
             HandleInput(pressedKey, pacman, map, ref score);
             
-            System.Console.ForegroundColor = ConsoleColor.Blue;
-            map.DrawMap();
-            
+            map.Draw();
             pacman.Draw();
             
             System.Console.ForegroundColor = ConsoleColor.Red;
