@@ -11,15 +11,16 @@ internal class Program
         var map = new GameMap("map.txt");
         var pacman = new GameObjects.Pacman(new IntVector2(1, 1));
         var score = new Score(new IntVector2(32, 0));
-        var input = new UserInput(pacman, map, score);
 
         var gameLoop = new GameLoop(new IGameObject[]
         {
-            input,
+            new ClearConsole(),
+            new UserInput(pacman, map, score),
             map,
             pacman,
-            score
-        }, TimeSpan.FromSeconds(1));
+            score,
+            new ThreadWait(TimeSpan.FromSeconds(1))
+        });
         gameLoop.Run();
     }
 }
