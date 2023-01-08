@@ -1,10 +1,10 @@
-﻿using Pacman.Console;
+﻿namespace Pacman.Console;
 
 internal class Program
 {
     public static void Main(string[] args)
     {
-        Console.CursorVisible = false;
+        System.Console.CursorVisible = false;
         
         var map = new GameMap("map.txt");
         ConsoleKeyInfo pressedKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
@@ -12,65 +12,60 @@ internal class Program
         Task.Run(() =>
         {
             while (true)
-                pressedKey = Console.ReadKey();
+                pressedKey = System.Console.ReadKey();
         });
 
-        int pacmanX = 1;
-        int pacmanY = 1;
+        var pacmanPosition = new IntVector2(1, 1);
         int score = 0;
         
         while (true)
         {
-            Console.Clear();
+            System.Console.Clear();
             
-            HandleInput(pressedKey, ref pacmanX, ref pacmanY, map, ref score);
+            HandleInput(pressedKey, ref pacmanPosition, map, ref score);
             
-            Console.ForegroundColor = ConsoleColor.Blue;
+            System.Console.ForegroundColor = ConsoleColor.Blue;
             map.DrawMap();
             
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.SetCursorPosition(pacmanX, pacmanY);
-            Console.Write("@");
+            System.Console.ForegroundColor = ConsoleColor.Yellow;
+            System.Console.SetCursorPosition(pacmanPosition.X, pacmanPosition.Y);
+            System.Console.Write("@");
 
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.SetCursorPosition(32, 0);
-            Console.Write($"Score: {score}");
+            System.Console.ForegroundColor = ConsoleColor.Red;
+            System.Console.SetCursorPosition(32, 0);
+            System.Console.Write($"Score: {score}");
             
             Thread.Sleep(1000);
         }
     }
     
-    private static void HandleInput(ConsoleKeyInfo pressedKey, ref int pacmanX, ref int pacmanY, GameMap map, ref int score)
+    private static void HandleInput(ConsoleKeyInfo pressedKey, ref IntVector2 pacmanPosition, GameMap map, ref int score)
     {
         var directions = GetDirection(pressedKey);
-        var nextPacmanPositionX = pacmanX + directions[0];
-        var nextPacmanPositionY = pacmanY + directions[1];
-
-        if (!map.IsAvailablePointForMovement(nextPacmanPositionX, nextPacmanPositionY)) 
-            return;
+        var nextPacmanPosition = pacmanPosition + directions;
         
-        pacmanX = nextPacmanPositionX;
-        pacmanY = nextPacmanPositionY;
+        if (!map.IsAvailablePointForMovement(nextPacmanPosition)) 
+            return;
 
-        if (!map.IsScore(nextPacmanPositionX, nextPacmanPositionY)) 
+        pacmanPosition = nextPacmanPosition;
+
+        if (!map.IsScore(nextPacmanPosition)) 
             return;
         
         score += 1;
-        map.EatScore(nextPacmanPositionX, nextPacmanPositionY);
+        map.EatScore(nextPacmanPosition);
     }
     
-    private static int[] GetDirection(ConsoleKeyInfo pressedKey)
+    private static IntVector2 GetDirection(ConsoleKeyInfo pressedKey)
     {
-        int[] direction = { 0, 0 };
         if (pressedKey.Key == ConsoleKey.UpArrow)
-            direction[1] = -1;
-        else if (pressedKey.Key == ConsoleKey.DownArrow)
-            direction[1] = 1;
-        else if (pressedKey.Key == ConsoleKey.LeftArrow)
-            direction[0] = -1;
-        else if (pressedKey.Key == ConsoleKey.RightArrow)
-            direction[0] = 1;
-        
-        return direction;
+            return new IntVector2(0, -1);
+        if (pressedKey.Key == ConsoleKey.DownArrow)
+            return new IntVector2(0, 1);
+        if (pressedKey.Key == ConsoleKey.LeftArrow)
+            return new IntVector2(-1, 0);
+        if (pressedKey.Key == ConsoleKey.RightArrow)
+            return new IntVector2(1, 0);
+        return IntVector2.Zero;
     }
 }

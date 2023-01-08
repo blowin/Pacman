@@ -7,6 +7,12 @@ public class GameMap
     
     private readonly char[,] _map;
 
+    private char this[IntVector2 position]
+    {
+        get => _map[position.X, position.Y];
+        set => _map[position.X, position.Y] = value;
+    }
+    
     public GameMap(char[,] map)
     {
         _map = map;
@@ -17,19 +23,19 @@ public class GameMap
     {
     }
 
-    public bool IsAvailablePointForMovement(int x, int y)
+    public bool IsAvailablePointForMovement(IntVector2 position)
     {
-        var cell = _map[x, y];
+        var cell = this[position];
         return cell == PlaceToMoveChar || cell == ScoreChar;
     }
 
-    public bool IsScore(int x, int y) => _map[x, y] == ScoreChar;
+    public bool IsScore(IntVector2 position) => this[position] == ScoreChar;
 
-    public void EatScore(int x, int y)
+    public void EatScore(IntVector2 position)
     {
-        if (!IsScore(x, y))
+        if (!IsScore(position))
             throw new InvalidOperationException("The score is not in this position.");
-        _map[x, y] = PlaceToMoveChar;
+        this[position] = PlaceToMoveChar;
     }
     
     public void DrawMap()
