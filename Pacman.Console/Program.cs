@@ -13,22 +13,13 @@ internal class Program
         var score = new Score(new IntVector2(32, 0));
         var input = new UserInput(pacman, map, score);
 
-        var gameObjects = new IGameObject[]
+        var gameLoop = new GameLoop(new IGameObject[]
         {
             input,
             map,
             pacman,
             score
-        };
-        
-        while (true)
-        {
-            System.Console.Clear();
-           
-            foreach (var gameObject in gameObjects)
-                gameObject.Update();
-            
-            Thread.Sleep(1000);
-        }
+        }, TimeSpan.FromSeconds(1));
+        gameLoop.Run();
     }
 }
