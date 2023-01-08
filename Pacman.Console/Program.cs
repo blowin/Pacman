@@ -15,22 +15,20 @@ internal class Program
                 pressedKey = System.Console.ReadKey();
         });
 
-        var pacmanPosition = new IntVector2(1, 1);
+        var pacman = new Pacman(new IntVector2(1, 1));
         int score = 0;
         
         while (true)
         {
             System.Console.Clear();
             
-            HandleInput(pressedKey, ref pacmanPosition, map, ref score);
+            HandleInput(pressedKey, pacman, map, ref score);
             
             System.Console.ForegroundColor = ConsoleColor.Blue;
             map.DrawMap();
             
-            System.Console.ForegroundColor = ConsoleColor.Yellow;
-            System.Console.SetCursorPosition(pacmanPosition.X, pacmanPosition.Y);
-            System.Console.Write("@");
-
+            pacman.Draw();
+            
             System.Console.ForegroundColor = ConsoleColor.Red;
             System.Console.SetCursorPosition(32, 0);
             System.Console.Write($"Score: {score}");
@@ -39,16 +37,16 @@ internal class Program
         }
     }
     
-    private static void HandleInput(ConsoleKeyInfo pressedKey, ref IntVector2 pacmanPosition, GameMap map, ref int score)
+    private static void HandleInput(ConsoleKeyInfo pressedKey,  Pacman pacman, GameMap map, ref int score)
     {
         var directions = GetDirection(pressedKey);
-        var nextPacmanPosition = pacmanPosition + directions;
+        var nextPacmanPosition = pacman.Position + directions;
         
         if (!map.IsAvailablePointForMovement(nextPacmanPosition)) 
             return;
-
-        pacmanPosition = nextPacmanPosition;
-
+        
+        pacman.MoveTo(nextPacmanPosition);
+        
         if (!map.IsScore(nextPacmanPosition)) 
             return;
         
