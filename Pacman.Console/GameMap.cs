@@ -46,7 +46,7 @@ public class GameMap
             {
                 System.Console.Write(_map[x, y]);
             }
-            System.Console.Write("\n");
+            System.Console.WriteLine();
         }
     }
     
