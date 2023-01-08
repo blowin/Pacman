@@ -46,17 +46,17 @@ internal class Program
         var nextPacmanPositionX = pacmanX + directions[0];
         var nextPacmanPositionY = pacmanY + directions[1];
 
-        if (map.IsAvailablePointForMovement(nextPacmanPositionX, nextPacmanPositionY))
-        {
-            pacmanX = nextPacmanPositionX;
-            pacmanY = nextPacmanPositionY;
+        if (!map.IsAvailablePointForMovement(nextPacmanPositionX, nextPacmanPositionY)) 
+            return;
+        
+        pacmanX = nextPacmanPositionX;
+        pacmanY = nextPacmanPositionY;
 
-            if (map.IsScore(nextPacmanPositionX, nextPacmanPositionY))
-            {
-                score += 1;
-                map.EatScore(nextPacmanPositionX, nextPacmanPositionY);
-            }
-        }
+        if (!map.IsScore(nextPacmanPositionX, nextPacmanPositionY)) 
+            return;
+        
+        score += 1;
+        map.EatScore(nextPacmanPositionX, nextPacmanPositionY);
     }
     
     private static int[] GetDirection(ConsoleKeyInfo pressedKey)
