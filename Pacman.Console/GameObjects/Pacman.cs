@@ -1,6 +1,6 @@
-﻿namespace Pacman.Console;
+﻿namespace Pacman.Console.GameObjects;
 
-public class Pacman
+public class Pacman : IGameObject
 {
     private const char PacmanChar = '@';
     
@@ -13,7 +13,7 @@ public class Pacman
         _position = position;
     }
 
-    public void Draw()
+    public void Update()
     {
         System.Console.ForegroundColor = ConsoleColor.Yellow;
         System.Console.SetCursorPosition(_position.X, _position.Y);

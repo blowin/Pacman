@@ -1,6 +1,6 @@
-﻿namespace Pacman.Console;
+﻿namespace Pacman.Console.GameObjects;
 
-public class Score
+public class Score : IGameObject
 {
     private int _value;
     private readonly IntVector2 _position;
@@ -10,13 +10,13 @@ public class Score
         _position = position;
     }
 
-    public void Draw()
+    public void Update()
     {
         System.Console.ForegroundColor = ConsoleColor.Red;
         System.Console.SetCursorPosition(_position.X, _position.Y);
         System.Console.Write($"Score: {_value}");
     }
-
+    
     public void Increase()
     {
         _value += 1;

@@ -1,6 +1,6 @@
-﻿namespace Pacman.Console;
+﻿namespace Pacman.Console.GameObjects;
 
-public class UserInput
+public class UserInput : IGameObject
 {
     private ConsoleKeyInfo _pressedKey;
     private readonly Pacman _pacman;

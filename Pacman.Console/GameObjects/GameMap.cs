@@ -1,6 +1,6 @@
-﻿namespace Pacman.Console;
+﻿namespace Pacman.Console.GameObjects;
 
-public class GameMap
+public class GameMap : IGameObject
 {
     private const char PlaceToMoveChar = ' ';
     private const char ScoreChar = '.';
@@ -38,7 +38,7 @@ public class GameMap
         this[position] = PlaceToMoveChar;
     }
     
-    public void Draw()
+    public void Update()
     {
         System.Console.ForegroundColor = ConsoleColor.Blue;
         for (int y = 0; y < _map.GetLength(1); y++)
