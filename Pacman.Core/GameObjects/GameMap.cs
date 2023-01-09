@@ -1,13 +1,12 @@
-﻿namespace Pacman.Core.GameObjects;
+﻿using Pacman.Core.GameObjects.MapCells;
+
+namespace Pacman.Core.GameObjects;
 
 public class GameMap : IGameObject
 {
-    private const char PlaceToMoveChar = ' ';
-    private const char ScoreChar = '.';
-    
-    private readonly char[,] _map;
+    private readonly IMapCell[,] _map;
 
-    private char this[IntVector2 position]
+    private IMapCell this[IntVector2 position]
     {
         get => _map[position.X, position.Y];
         set => _map[position.X, position.Y] = value;
@@ -15,7 +14,8 @@ public class GameMap : IGameObject
     
     public GameMap(char[,] map)
     {
-        _map = map;
+        var factory = new MapCellFactory();
+        _map = factory.Create(map);
     }
 
     public GameMap(string path) 
@@ -26,28 +26,28 @@ public class GameMap : IGameObject
     public bool IsAvailablePointForMovement(IntVector2 position)
     {
         var cell = this[position];
-        return cell == PlaceToMoveChar || cell == ScoreChar;
+        return cell.Match(wall => false,
+            point => true,
+            move => true);
     }
 
-    public bool IsScore(IntVector2 position) => this[position] == ScoreChar;
+    public bool IsScore(IntVector2 position) => this[position].Match(_ => false, point => true, _ => false);
 
     public void EatScore(IntVector2 position)
     {
         if (!IsScore(position))
             throw new InvalidOperationException("The score is not in this position.");
-        this[position] = PlaceToMoveChar;
+        this[position] = new PlaceToMove();
     }
     
     public void Update()
     {
-        Console.ForegroundColor = ConsoleColor.Blue;
         for (int y = 0; y < _map.GetLength(1); y++)
         {
             for (int x = 0; x < _map.GetLength(0); x++)
             {
-                Console.Write(_map[x, y]);
+                _map[x, y].Draw();
             }
-            Console.WriteLine();
         }
     }
     
