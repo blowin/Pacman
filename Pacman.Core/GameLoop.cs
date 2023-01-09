@@ -1,6 +1,6 @@
-﻿using Pacman.Console.GameObjects;
+﻿using Pacman.Core.GameObjects;
 
-namespace Pacman.Console;
+namespace Pacman.Core;
 
 public class GameLoop
 {
@@ -14,7 +14,7 @@ public class GameLoop
     
     public GameLoop(IGameObject[] gameObjects, TimeSpan waitTime)
     {
-        System.Console.CursorVisible = false;
+        Console.CursorVisible = false;
         
         _gameObjects = gameObjects;
         _waitTime = waitTime;
@@ -24,7 +24,7 @@ public class GameLoop
     {
         while (true)
         {
-            System.Console.Clear();
+            Console.Clear();
            
             foreach (var gameObject in _gameObjects)
                 gameObject.Update();

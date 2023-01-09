@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console.GameObjects;
+﻿namespace Pacman.Core.GameObjects;
 
 public interface IGameObject
 {

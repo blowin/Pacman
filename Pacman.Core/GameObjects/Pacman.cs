@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console.GameObjects;
+﻿namespace Pacman.Core.GameObjects;
 
 public class Pacman : IGameObject
 {
@@ -15,9 +15,9 @@ public class Pacman : IGameObject
 
     public void Update()
     {
-        System.Console.ForegroundColor = ConsoleColor.Yellow;
-        System.Console.SetCursorPosition(_position.X, _position.Y);
-        System.Console.Write(PacmanChar);
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.SetCursorPosition(_position.X, _position.Y);
+        Console.Write(PacmanChar);
     }
 
     public void MoveTo(IntVector2 position)

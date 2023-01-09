@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console;
+﻿namespace Pacman.Core;
 
 public readonly struct IntVector2 : IEquatable<IntVector2>
 {

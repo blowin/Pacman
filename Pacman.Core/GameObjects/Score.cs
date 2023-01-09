@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console.GameObjects;
+﻿namespace Pacman.Core.GameObjects;
 
 public class Score : IGameObject
 {
@@ -12,9 +12,9 @@ public class Score : IGameObject
 
     public void Update()
     {
-        System.Console.ForegroundColor = ConsoleColor.Red;
-        System.Console.SetCursorPosition(_position.X, _position.Y);
-        System.Console.Write($"Score: {_value}");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.SetCursorPosition(_position.X, _position.Y);
+        Console.Write($"Score: {_value}");
     }
     
     public void Increase()

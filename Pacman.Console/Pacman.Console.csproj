@@ -13,4 +13,8 @@
       </None>
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Pacman.Core\Pacman.Core.csproj" />
+    </ItemGroup>
+
 </Project>

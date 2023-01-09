@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console.GameObjects;
+﻿namespace Pacman.Core.GameObjects;
 
 public class UserInput : IGameObject
 {
@@ -17,7 +17,7 @@ public class UserInput : IGameObject
         var _ = Task.Factory.StartNew(() =>
         {
             while (true)
-                _pressedKey = System.Console.ReadKey();
+                _pressedKey = Console.ReadKey();
         }, TaskCreationOptions.LongRunning);
     }
 

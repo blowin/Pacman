@@ -1,4 +1,4 @@
-﻿namespace Pacman.Console.GameObjects;
+﻿namespace Pacman.Core.GameObjects;
 
 public class GameMap : IGameObject
 {
@@ -40,14 +40,14 @@ public class GameMap : IGameObject
     
     public void Update()
     {
-        System.Console.ForegroundColor = ConsoleColor.Blue;
+        Console.ForegroundColor = ConsoleColor.Blue;
         for (int y = 0; y < _map.GetLength(1); y++)
         {
             for (int x = 0; x < _map.GetLength(0); x++)
             {
-                System.Console.Write(_map[x, y]);
+                Console.Write(_map[x, y]);
             }
-            System.Console.WriteLine();
+            Console.WriteLine();
         }
     }
     
