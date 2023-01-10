@@ -1,13 +1,16 @@
-﻿namespace Pacman.Core.GameObjects;
+﻿using Pacman.Core.GameObjects.MapCells;
+
+namespace Pacman.Core.GameObjects;
 
 public class Score : IGameObject
 {
     private int _value;
     private readonly IntVector2 _position;
 
-    public Score(IntVector2 position)
+    public Score(GameMap map)
     {
-        _position = position;
+        _position = new IntVector2(map.Width + 1, 0);
+        map.OnEatScore += Increase;
     }
 
     public void Update()
@@ -15,10 +18,11 @@ public class Score : IGameObject
         Console.ForegroundColor = ConsoleColor.Red;
         Console.SetCursorPosition(_position.X, _position.Y);
         Console.Write($"Score: {_value}");
+        Console.ResetColor();
     }
     
-    public void Increase()
+    private void Increase(ScorePoint point)
     {
-        _value += 1;
+        _value += point.Value;
     }
 }

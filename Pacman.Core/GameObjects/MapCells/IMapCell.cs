@@ -4,6 +4,5 @@ public interface IMapCell
 {
     void Draw();
 
-    TRes Match<TRes>(Func<Wall, TRes> onWall, Func<ScorePoint, TRes> onScorePoint,
-        Func<PlaceToMove, TRes> onPlaceToMove);
+    void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove);
 }

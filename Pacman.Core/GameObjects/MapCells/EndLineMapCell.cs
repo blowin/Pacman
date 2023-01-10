@@ -3,7 +3,7 @@
 public class EndLineMapCell : IMapCell
 {
     private readonly IMapCell _wrap;
-
+    
     public EndLineMapCell(IMapCell wrap)
     {
         _wrap = wrap;
@@ -15,7 +15,7 @@ public class EndLineMapCell : IMapCell
         Console.WriteLine();
     }
 
-    public TRes Match<TRes>(Func<Wall, TRes> onWall, Func<ScorePoint, TRes> onScorePoint, Func<PlaceToMove, TRes> onPlaceToMove) 
+    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove) 
         => _wrap.Match(onWall, onScorePoint, onPlaceToMove);
 
     public override string? ToString() => _wrap.ToString();

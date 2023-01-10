@@ -3,16 +3,12 @@
 public class UserInput : IGameObject
 {
     private ConsoleKeyInfo _pressedKey;
-    private readonly Pacman _pacman;
     private readonly GameMap _map;
-    private readonly Score _score;
 
-    public UserInput(Pacman pacman, GameMap map, Score score)
+    public UserInput(GameMap map)
     {
         _pressedKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
-        _pacman = pacman;
         _map = map;
-        _score = score;
             
         var _ = Task.Factory.StartNew(() =>
         {
@@ -23,19 +19,8 @@ public class UserInput : IGameObject
 
     public void Update()
     {
-        var directions = GetDirection();
-        var nextPacmanPosition = _pacman.Position + directions;
-        
-        if (!_map.IsAvailablePointForMovement(nextPacmanPosition)) 
-            return;
-        
-        _pacman.MoveTo(nextPacmanPosition);
-        
-        if (!_map.IsScore(nextPacmanPosition)) 
-            return;
-        
-        _score.Increase();
-        _map.EatScore(nextPacmanPosition);
+        var direction = GetDirection();
+        _map.MovePacman(direction);
     }
         
     private IntVector2 GetDirection()
