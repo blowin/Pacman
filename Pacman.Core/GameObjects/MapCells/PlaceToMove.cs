@@ -6,7 +6,7 @@ public class PlaceToMove : IMapCell
     
     public void Draw() => Console.Write(Character);
 
-    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove)
+    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove, Action<Pacman> onPacman)
         => onPlaceToMove(this);
 
     public override string ToString() => Character;

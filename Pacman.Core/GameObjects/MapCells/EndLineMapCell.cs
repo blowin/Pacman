@@ -15,8 +15,8 @@ public class EndLineMapCell : IMapCell
         Console.WriteLine();
     }
 
-    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove) 
-        => _wrap.Match(onWall, onScorePoint, onPlaceToMove);
+    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove, Action<Pacman> onPacman) 
+        => _wrap.Match(onWall, onScorePoint, onPlaceToMove, onPacman);
 
     public override string? ToString() => _wrap.ToString();
 }

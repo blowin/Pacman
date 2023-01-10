@@ -7,8 +7,20 @@ public class GameMap : IGameObject
     public event Action<ScorePoint>? OnEatScore; 
 
     private readonly IMapCell[,] _map;
-    private Pacman _pacman;
+    
+    private MapCells.Pacman Pacman { get; set; }
 
+    public bool EndOfGame
+    {
+        get
+        {
+            if (!Pacman.Alive)
+                return true;
+
+            return !HasScorePoint();
+        }
+    }
+    
     public int Height => _map.GetLength(1);
     
     public int Width => _map.GetLength(0);
@@ -25,7 +37,7 @@ public class GameMap : IGameObject
         _map = factory.Create(map);
 
         var pacmanPosition = new IntVector2(1, 1);
-        this[pacmanPosition] = _pacman = new Pacman(pacmanPosition);
+        this[pacmanPosition] = Pacman = new MapCells.Pacman(pacmanPosition);
     }
 
     public GameMap(string path) 
@@ -49,21 +61,42 @@ public class GameMap : IGameObject
         if(direction.Equals(IntVector2.Zero))
             return;
 
-        var newPacmanPosition = _pacman.Position + direction;
+        var newPacmanPosition = Pacman.Position + direction;
         
         var cell = this[newPacmanPosition];
-        cell.Match(wall => _pacman.Kill(), point => OnEatScore?.Invoke(point), move => {});
-        
-        MovePacmanTo(newPacmanPosition);
+        cell.Match(wall => Pacman.Kill(), 
+    point =>
+            {
+                OnEatScore?.Invoke(point);
+                MovePacmanTo(newPacmanPosition);
+            }, 
+            move => MovePacmanTo(newPacmanPosition), 
+            _ => throw new InvalidOperationException());
     }
 
     private void MovePacmanTo(IntVector2 newPacmanPosition)
     {
-        var oldPacmanPosition = _pacman.Position;
-        _pacman = new Pacman(_pacman, newPacmanPosition);
+        var oldPacmanPosition = Pacman.Position;
+        Pacman = new MapCells.Pacman(Pacman, newPacmanPosition);
         
-        this[newPacmanPosition] = _pacman;
+        this[newPacmanPosition] = Pacman;
         this[oldPacmanPosition] = new PlaceToMove();
+    }
+    
+    private bool HasScorePoint()
+    {
+        for (int y = 0; y < Height; y++)
+        {
+            for (int x = 0; x < Width; x++)
+            {
+                var isScore = false;
+                _map[x, y].Match(_ => {}, _ => isScore = true, _ => {}, _ => {});
+                if (isScore)
+                    return true;
+            }
+        }
+
+        return false;
     }
     
     private static char[,] ReadMap(string path)

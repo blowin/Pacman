@@ -13,7 +13,7 @@ public class ScorePoint : IMapCell
     
     public void Draw() => Console.Write(Character);
 
-    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove)
+    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove, Action<Pacman> onPacman)
         => onScorePoint(this);
 
     public override string ToString() => Character;

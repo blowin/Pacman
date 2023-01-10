@@ -13,7 +13,7 @@ internal class Program
         var score = new Score(map);
         var input = new UserInput(map);
 
-        var gameLoop = new GameLoop(new IGameObject[]
+        var gameLoop = new GameLoop(map, new IGameObject[]
         {
             input,
             map,

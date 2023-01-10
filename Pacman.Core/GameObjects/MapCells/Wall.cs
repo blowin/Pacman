@@ -11,7 +11,7 @@ public class Wall : IMapCell
         Console.ResetColor();
     }
 
-    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove)
+    public void Match(Action<Wall> onWall, Action<ScorePoint> onScorePoint, Action<PlaceToMove> onPlaceToMove, Action<Pacman> onPacman)
         => onWall(this);
 
     public override string ToString() => Character;

@@ -6,23 +6,25 @@ public class GameLoop
 {
     private readonly IGameObject[] _gameObjects;
     private readonly TimeSpan _waitTime;
+    private readonly GameMap _map;
 
-    public GameLoop(IGameObject[] gameObjects)
-        : this(gameObjects, TimeSpan.FromSeconds(1))
+    public GameLoop(GameMap map, IGameObject[] gameObjects)
+        : this(map, gameObjects, TimeSpan.FromSeconds(1))
     {
     }
     
-    public GameLoop(IGameObject[] gameObjects, TimeSpan waitTime)
+    public GameLoop(GameMap map, IGameObject[] gameObjects, TimeSpan waitTime)
     {
         Console.CursorVisible = false;
         
         _gameObjects = gameObjects;
         _waitTime = waitTime;
+        _map = map;
     }
 
     public void Run()
     {
-        while (true)
+        while (!_map.EndOfGame)
         {
             Console.Clear();
            
